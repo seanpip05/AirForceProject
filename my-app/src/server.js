@@ -13,13 +13,24 @@ mongoose.connect('mongodb://localhost:27017/instrumentDataDB', {
   useUnifiedTopology: true,
 });
 
-// not useful anymore, just created a scheme like this 
+// scheme creation
 const instrumentSchema = new mongoose.Schema({
-  altitude: Number,
-  his: Number,
-  adi: Number,
-  createdAt: { type: Date, default: Date.now }
-});
+    altitude: {
+      type: Number,
+      min: [0, 'Altitude must be at least 0'],
+      max: [3000, 'Altitude cannot exceed 3000']
+    },
+    his: {
+      type: Number,
+      min: [0, 'HIS must be at least 0'],
+      max: [360, 'HIS cannot exceed 360']
+    },
+    adi: {
+      type: Number,
+      min: [-100, 'ADI cannot be less than -100'],
+      max: [100, 'ADI cannot exceed 100']
+    }
+  });
 const InstrumentData = mongoose.model('InstrumentData', instrumentSchema);
 
 // just for checking that the server is alive
@@ -31,9 +42,9 @@ app.get('/', (req, res) => {
 app.get('/test-create', async (req, res) => {
   try {
     const testData = new InstrumentData({
-      altitude: 5000,
-      his: 45,
-      adi: 22
+      altitude: 110100,
+      his: 1111100,
+      adi: 111100
     });
     
     const savedData = await testData.save();
@@ -55,25 +66,31 @@ app.get('/test-create', async (req, res) => {
 
 // POST Route
 app.post('/submit', async (req, res) => {
-  try {
-    const { altitude, his, adi } = req.body;
-    
-    const newData = new InstrumentData({ altitude, his, adi });
-    await newData.save();
-    
-    res.status(201).json({ 
-      success: true, 
-      message: 'Data saved successfully',
-      data: newData 
-    });
-  } catch (error) {
-    res.status(500).json({ 
-      success: false, 
-      message: 'Error saving data',
-      error: error.message 
-    });
-  }
-});
+    try {
+      const { altitude, his, adi } = req.body;
+      
+      const newData = new InstrumentData({ altitude, his, adi });
+  
+      // Validate the new data before saving
+      await newData.validate();
+  
+      await newData.save();
+      
+      res.status(201).json({ 
+        success: true, 
+        message: 'Data saved successfully',
+        data: newData 
+      });
+    } catch (error) {
+      console.error('Validation or save error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: 'Error saving data',
+        error: error.message 
+      });
+    }
+  });
+  
 
 // GET Route
 app.get('/data', async (req, res) => {
