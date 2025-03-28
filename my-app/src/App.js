@@ -4,7 +4,7 @@ import Popup from "./components/popup/Popup";
 import "./css/App.css";
 
 const App = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(true);
 
   return (
     <>

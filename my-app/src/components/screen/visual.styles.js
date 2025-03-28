@@ -12,7 +12,6 @@ export const Rectangle = styled.div`
 export const Circle = styled.div`
     width: 20%;
     height: 60%;
-    background-color: #e74c3c;
     border-radius: 50%;
     border: solid 2px;
 `;
