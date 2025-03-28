@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import { Container, ButtonContainer, Button, ShapeContainer} from "./screen.styles";
-import { Rectangle, Circle, VisualFlexDiv } from "./visual.styles";
+import { Rectangle, Circle, VisualFlexDiv, RightArrow, HeadingCircle, Arrow } from "./visual.styles";
 import { Ellipse, TextFlexDiv } from "./text.styles";
 
 const MainScreen = ({ 
@@ -32,6 +32,77 @@ const MainScreen = ({
     return ""; // default color
   };
 
+  // Component for the custom heading circle
+  const HeadingIndicator = () => {
+    // Convert HIS value to rotation angle
+    const hisValue = parseFloat(instrumentData.his) || 0;
+    
+    return (
+      <HeadingCircle>
+        {/* Zero reference arrow - always points straight up */}
+        <Arrow 
+          style={{
+            height: '40%', 
+            top: '15%', 
+          }} 
+        />
+        
+        {/* HIS value arrow - rotates based on HIS value */}
+        <Arrow 
+          style={{
+            height: '50%', 
+            top: '10%', 
+            transform: `rotate(${hisValue}deg)`,
+            backgroundColor: 'orange'
+          }} 
+        />
+        {/* Circle markings */}
+        <div style={{position: 'absolute', top: '5%', left: '50%', transform: 'translateX(-50%)'}}>0</div>
+        <div style={{position: 'absolute', bottom: '5%', left: '50%', transform: 'translateX(-50%)'}}>180</div>
+        <div style={{position: 'absolute', top: '50%', left: '5%', transform: 'translateY(-50%)'}}>270</div>
+        <div style={{position: 'absolute', top: '50%', right: '5%', transform: 'translateY(-50%)'}}>90</div>
+      </HeadingCircle>
+    );
+  };
+
+  const getArrowPosition = () => {
+    const altitude = parseFloat(instrumentData.altitude);
+  
+    if (altitude < 1000) {
+      return (
+        <>
+          <div>3000</div>
+          <div>2000</div>
+          <div>1000</div>
+          <p style={{width: "max-content"}}>-------------------------------------<RightArrow /></p>            
+          <div>0</div>
+        </>
+      );
+    }
+    
+    if (altitude < 2000) {
+      return (
+        <>
+          <div>3000</div>
+          <div>2000</div>
+          <p style={{width: "max-content"}}>-------------------------------------<RightArrow /></p>            
+          <div>1000</div>
+          <div>0</div>
+        </>
+      );
+    }
+    
+    return (
+      <>
+        <div>3000</div>
+        <p style={{width: "max-content"}}>-------------------------------------<RightArrow /></p>            
+        <div>2000</div>
+        <div>1000</div>
+        <div>0</div>
+      </>
+    );
+  };
+
   return (
     <Container>
       <ButtonContainer>
@@ -41,40 +112,37 @@ const MainScreen = ({
       </ButtonContainer>
 
       {isVisual ? (
-      <ShapeContainer>
-        <Rectangle>
-          <VisualFlexDiv>
-            <div>3000</div>
-            <div>2000</div>
-            <div>1000</div>
-            <div>0</div>
-          </VisualFlexDiv>
-        </Rectangle>
-        <Circle />
-        <Circle style={{ backgroundColor: getCircleColor() }}/>
-      </ShapeContainer>
-    ) : (
-      <ShapeContainer>
-        <Ellipse>
-          <TextFlexDiv>
-            <div>Altitude</div>
-            <div>{instrumentData.altitude}</div>
-          </TextFlexDiv>
-        </Ellipse>
-        <Ellipse>
-          <TextFlexDiv>
-            <div>HIS</div>
-            <div>{instrumentData.his}</div>
-          </TextFlexDiv>
-        </Ellipse>
-        <Ellipse>
-          <TextFlexDiv>
-            <div>ADI</div>
-            <div>{instrumentData.adi}</div>
-          </TextFlexDiv>
-        </Ellipse>
-      </ShapeContainer>
-    )};
+        <ShapeContainer>
+          <Rectangle>
+            <VisualFlexDiv>
+              {getArrowPosition()}
+            </VisualFlexDiv>
+          </Rectangle>
+          <HeadingIndicator />
+          <Circle style={{ backgroundColor: getCircleColor() }}/>
+        </ShapeContainer>
+      ) : (
+        <ShapeContainer>
+          <Ellipse>
+            <TextFlexDiv>
+              <div>Altitude</div>
+              <div>{instrumentData.altitude}</div>
+            </TextFlexDiv>
+          </Ellipse>
+          <Ellipse>
+            <TextFlexDiv>
+              <div>HIS</div>
+              <div>{instrumentData.his}</div>
+            </TextFlexDiv>
+          </Ellipse>
+          <Ellipse>
+            <TextFlexDiv>
+              <div>ADI</div>
+              <div>{instrumentData.adi}</div>
+            </TextFlexDiv>
+          </Ellipse>
+        </ShapeContainer>
+      )}
     </Container>
   );
 };

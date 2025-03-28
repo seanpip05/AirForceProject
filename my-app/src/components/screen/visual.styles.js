@@ -23,3 +23,26 @@ export const VisualFlexDiv = styled.div`
     flex-direction: column;
     height: 100%;
 `;
+
+export const RightArrow = styled.i`
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+`;
+
+export const HeadingCircle = styled(Circle)`
+  position: relative;
+  border: 2px solid black;
+`;
+
+// Styled arrow component
+export const Arrow = styled.div`
+  position: absolute;
+  width: 2px;
+  background-color: black;
+  transform-origin: bottom center;
+  left: 50%;
+`;
