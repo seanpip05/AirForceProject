@@ -17,11 +17,10 @@ export const ButtonContainer = styled.div`
 `;
 
 export const Button = styled.button`
-    padding: 10px 20px;
+    padding: 10px 30px;
     font-size: 16px;
     cursor: pointer;
     margin: 0 10px;
-    width: 5%;
     border: solid 1.5px;
     border-radius: 20px;
     background-color:rgb(123, 217, 139);

@@ -97,7 +97,7 @@ app.post('/submit', async (req, res) => {
       
       res.status(201).json({ 
         success: true, 
-        message: 'Data saved successfully',
+        message: 'המידע נשמר בהצלחה',
         data: newData 
       });
     } catch (error) {

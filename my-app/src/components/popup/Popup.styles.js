@@ -10,6 +10,7 @@ export const Overlay = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: auto;
 `;
 
 export const PopupContainer = styled.div`
@@ -22,6 +23,10 @@ export const PopupContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 1024px) {
+        width: 80vw; 
+    }
 `;
 
 export const InfoRow = styled.div`
@@ -32,6 +37,14 @@ export const InfoRow = styled.div`
     padding: 10px;
     margin-bottom: 10px;
     align-items: center;
+
+    @media (max-width: 480px) {
+        width: 100% !important; 
+    }
+
+    @media (max-width: 1024px) {
+        width: 70%;
+    }
 `;
 
 export const LeftBox = styled.div`
@@ -74,5 +87,28 @@ export const Button = styled.button`
     font-size: 12px;
     font-weight: bold;
     margin-right: 2%;
+  }
+
+  @media (max-width: 480px) {
+    svg {
+      width: 25% !important;
+    }
+
+    span {
+      margin-right: 5% !important;
+      font-size: 10px;
+    }
+
+  }
+
+  @media (max-width: 1024px) {
+    svg {
+      width: 20%;
+    }
+
+    span {
+      margin-right: 3%;
+    }
+
   }
 `;

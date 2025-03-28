@@ -66,39 +66,26 @@ const MainScreen = ({
   };
 
   const getArrowPosition = () => {
-    const altitude = parseFloat(instrumentData.altitude);
+    const altitude = parseFloat(instrumentData.altitude) || 0;
   
-    if (altitude < 1000) {
-      return (
-        <>
-          <div>3000</div>
-          <div>2000</div>
-          <div>1000</div>
-          <p style={{width: "max-content"}}>-------------------------------------<RightArrow /></p>            
-          <div>0</div>
-        </>
-      );
-    }
-    
-    if (altitude < 2000) {
-      return (
-        <>
-          <div>3000</div>
-          <div>2000</div>
-          <p style={{width: "max-content"}}>-------------------------------------<RightArrow /></p>            
-          <div>1000</div>
-          <div>0</div>
-        </>
-      );
-    }
-    
+    // Convert altitude to percentage for positioning within the rectangle
+    const altitudePercentage = Math.min(100, (1 - altitude / 3000) * 100);
+  
     return (
       <>
-        <div>3000</div>
-        <p style={{width: "max-content"}}>-------------------------------------<RightArrow /></p>            
-        <div>2000</div>
-        <div>1000</div>
-        <div>0</div>
+        <div style={{ position: "absolute", top: "5%", left: "50%", transform: "translateX(-50%)" }}>3000</div>
+        <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translateX(-50%)" }}>2000</div>
+        <div style={{ position: "absolute", top: "60%", left: "50%", transform: "translateX(-50%)" }}>1000</div>
+        <div style={{ position: "absolute", top: "90%", left: "50%", transform: "translateX(-50%)" }}>0</div>
+  
+        {/* Arrow dynamically positioned based on altitude */}
+        <RightArrow 
+          style={{ 
+            position: "absolute", 
+            top: `${altitudePercentage}%`, 
+            transform: "translateY(-50%)" 
+          }} 
+        />
       </>
     );
   };
