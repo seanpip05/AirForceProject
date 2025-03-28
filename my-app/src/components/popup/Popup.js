@@ -3,7 +3,7 @@ import { Overlay, PopupContainer, InfoRow, LeftBox, RightInput, Button } from ".
 import { ReactComponent as ArrowIcon } from '../../assests/arrow.svg';
 import axios from 'axios';
 
-const Popup = ({ onClose }) => {
+const Popup = ({ onClose, onDataSubmit }) => {
   const [formData, setFormData] = useState({
     altitude: '',
     his: '',
@@ -45,7 +45,7 @@ const Popup = ({ onClose }) => {
     e.preventDefault();
 
     if (!validateForm()) {
-      return; // prevent submission
+      return; // dont submit if form is invalid
     }
 
     try {
@@ -57,6 +57,8 @@ const Popup = ({ onClose }) => {
 
       alert(response.data.message);
       onClose();
+      
+      onDataSubmit();
     } catch (error) {
       console.error('Submission error:', error);
       alert('Failed to submit data');

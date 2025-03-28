@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const app = express();
 
@@ -15,22 +16,36 @@ mongoose.connect('mongodb://localhost:27017/instrumentDataDB', {
 
 // scheme creation
 const instrumentSchema = new mongoose.Schema({
-    altitude: {
-      type: Number,
-      min: [0, 'Altitude must be at least 0'],
-      max: [3000, 'Altitude cannot exceed 3000']
-    },
-    his: {
-      type: Number,
-      min: [0, 'HIS must be at least 0'],
-      max: [360, 'HIS cannot exceed 360']
-    },
-    adi: {
-      type: Number,
-      min: [-100, 'ADI cannot be less than -100'],
-      max: [100, 'ADI cannot exceed 100']
-    }
-  });
+  altitude: {
+    type: Number,
+    min: [0, 'Altitude must be at least 0'],
+    max: [3000, 'Altitude cannot exceed 3000']
+  },
+  his: {
+    type: Number,
+    min: [0, 'HIS must be at least 0'],
+    max: [360, 'HIS cannot exceed 360']
+  },
+  adi: {
+    type: Number,
+    min: [-100, 'ADI cannot be less than -100'],
+    max: [100, 'ADI cannot exceed 100']
+  },
+  creationTime: {
+    type: Date,
+    default: Date.now
+  }
+}, { 
+// Disable automatic timestamps
+timestamps: false 
+});
+
+// Use mongoose-auto-increment for id
+instrumentSchema.plugin(require('mongoose-sequence')(mongoose), {
+inc_field: 'id',
+start_seq: 1  // Optional: start numbering from 1
+});
+
 const InstrumentData = mongoose.model('InstrumentData', instrumentSchema);
 
 // just for checking that the server is alive
@@ -42,9 +57,9 @@ app.get('/', (req, res) => {
 app.get('/test-create', async (req, res) => {
   try {
     const testData = new InstrumentData({
-      altitude: 110100,
-      his: 1111100,
-      adi: 111100
+      altitude: 1002,
+      his: 100,
+      adi: 0
     });
     
     const savedData = await testData.save();
@@ -69,9 +84,13 @@ app.post('/submit', async (req, res) => {
     try {
       const { altitude, his, adi } = req.body;
       
-      const newData = new InstrumentData({ altitude, his, adi });
+      const newData = new InstrumentData({ 
+        altitude, 
+        his, 
+        adi
+      });
   
-      // Validate the new data before saving
+      // validate the new data before saving
       await newData.validate();
   
       await newData.save();
@@ -95,7 +114,10 @@ app.post('/submit', async (req, res) => {
 // GET Route
 app.get('/data', async (req, res) => {
   try {
-    const data = await InstrumentData.find().sort({ createdAt: -1 });
+    const data = await InstrumentData.find()
+      .sort({ creationTime: -1 }) // Sort by creationTime in descending order
+      .limit(1); // Limit to the most recent entry
+    
     res.json({ 
       success: true, 
       data 

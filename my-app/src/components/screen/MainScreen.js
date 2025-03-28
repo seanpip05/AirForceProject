@@ -1,41 +1,18 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import { Container, ButtonContainer, Button, ShapeContainer} from "./screen.styles";
 import { Rectangle, Circle, VisualFlexDiv } from "./visual.styles";
 import { Ellipse, TextFlexDiv } from "./text.styles";
 
-const MainScreen = ({ onOpenPopup }) => {
-  const [isVisual, setIsVisual] = useState(true); 
-  const [instrumentData, setInstrumentData] = useState({
+const MainScreen = ({ 
+  onOpenPopup, 
+  instrumentData = {
+    id: null,
     altitude: 'value',
     his: 'value',
     adi: 'value'
-  });
-
-  // function to fetch the data
-  const fetchLatestData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/data');
-      
-      if (response.data.data && response.data.data.length > 0) {
-        const latestData = response.data.data[0];
-        setInstrumentData({
-          altitude: latestData.altitude,
-          his: latestData.his,
-          adi: latestData.adi
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  // fetch the data each time i enter the page
-  useEffect(() => {
-    if (!isVisual) {
-      fetchLatestData();
-    }
-  }, [isVisual]);
+  } 
+}) => {
+  const [isVisual, setIsVisual] = useState(true); 
 
   const handleButtonClick = (type) => {
     if (type === "Visual") {
@@ -45,6 +22,15 @@ const MainScreen = ({ onOpenPopup }) => {
     }
   };
 
+  // function to get the color of the circle
+  const getCircleColor = () => {
+    if (instrumentData.adi === 100) {
+      return "blue";
+    } else if (instrumentData.adi === 0) {
+      return "green";
+    }
+    return ""; // default color
+  };
 
   return (
     <Container>
@@ -65,7 +51,7 @@ const MainScreen = ({ onOpenPopup }) => {
           </VisualFlexDiv>
         </Rectangle>
         <Circle />
-        <Circle />
+        <Circle style={{ backgroundColor: getCircleColor() }}/>
       </ShapeContainer>
     ) : (
       <ShapeContainer>
