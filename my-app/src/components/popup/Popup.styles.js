@@ -73,6 +73,6 @@ export const Button = styled.button`
     position: absolute;
     font-size: 12px;
     font-weight: bold;
-    margin-right: 4%;
+    margin-right: 2%;
   }
 `;
