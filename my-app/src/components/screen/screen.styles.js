@@ -1,13 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-    background: #f5f5f5;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     justify-content: space-evenly;
 `;
 
@@ -23,6 +21,11 @@ export const Button = styled.button`
     font-size: 16px;
     cursor: pointer;
     margin: 0 10px;
+    width: 5%;
+    border: solid 1.5px;
+    border-radius: 20px;
+    background-color:rgb(123, 217, 139);
+
 `;
 
 export const ShapeContainer = styled.div`
@@ -32,26 +35,4 @@ export const ShapeContainer = styled.div`
     width: 100%;
     height: 60%;
     gap: 5%;
-`;
-
-export const Rectangle = styled.div`
-    width: 7%;
-    height: 100%;
-    background-color: #3498db;
-    margin-right: 20px;
-`;
-
-export const Circle = styled.div`
-    width: 20%;
-    height: 60%;
-    background-color: #e74c3c;
-    border-radius: 50%;
-`;
-
-export const FlexDiv = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
 `;
