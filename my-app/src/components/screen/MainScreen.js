@@ -71,10 +71,10 @@ const MainScreen = ({
   
     return (
       <>
-        <div style={{ position: "absolute", top: "5%", left: "50%", transform: "translateX(-50%)" }}>3000</div>
-        <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translateX(-50%)" }}>2000</div>
-        <div style={{ position: "absolute", top: "60%", left: "50%", transform: "translateX(-50%)" }}>1000</div>
-        <div style={{ position: "absolute", top: "90%", left: "50%", transform: "translateX(-50%)" }}>0</div>
+        <div style={{ position: "absolute", top: "0%", left: "50%", transform: "translateX(-50%)" }}>3000</div>
+        <div style={{ position: "absolute", top: "33%", left: "50%", transform: "translateX(-50%)" }}>2000</div>
+        <div style={{ position: "absolute", top: "66%", left: "50%", transform: "translateX(-50%)" }}>1000</div>
+        <div style={{ position: "sticky", top: "100%", transform: "translateX(-50%)" }}>0</div>
   
         {/* arrow position by the percentage */}
         <RightArrow 
