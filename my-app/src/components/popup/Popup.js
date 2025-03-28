@@ -74,7 +74,8 @@ const Popup = ({ onClose, onDataSubmit }) => {
           <InfoRow>
             <LeftBox>Altitude</LeftBox>
             <RightInput 
-              type="number" 
+              type="number"
+              step="0.01"
               name="altitude"
               placeholder="Altitude"
               value={formData.altitude}
@@ -85,7 +86,8 @@ const Popup = ({ onClose, onDataSubmit }) => {
           <InfoRow>
             <LeftBox>HIS</LeftBox>
             <RightInput 
-              type="number" 
+              type="number"
+              step="0.01"
               name="his"
               placeholder="HIS"
               value={formData.his}
@@ -98,6 +100,7 @@ const Popup = ({ onClose, onDataSubmit }) => {
             <RightInput 
               type="number" 
               name="adi"
+              step="0.01"
               placeholder="ADI"
               value={formData.adi}
               onChange={handleInputChange}
