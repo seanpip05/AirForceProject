@@ -62,53 +62,53 @@ export const RightInput = styled.input`
 `;
 
 export const Button = styled.button`
-  margin-top: 1%;
-  padding: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  color: #333;
-  width: 65%;
-  height: 20%;
-  transform: scale(1.5);
-  position: relative; /* To position the text inside the arrow */
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+    margin-top: 1%;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: #333;
+    width: 65%;
+    height: 20%;
+    transform: scale(1.5);
+    position: relative; /* To position the text inside the arrow */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
-  svg {
-    width: 10%;
-    height: 100%;
-  }
-
-  span {
-    position: absolute;
-    font-size: 12px;
-    font-weight: bold;
-    margin-right: 2%;
-  }
-
-  @media (max-width: 480px) {
     svg {
-      width: 25% !important;
+      width: 10%;
+      height: 100%;
     }
 
     span {
-      margin-right: 5% !important;
-      font-size: 10px;
+      position: absolute;
+      font-size: 12px;
+      font-weight: bold;
+      margin-right: 2%;
     }
 
-  }
+    @media (max-width: 480px) {
+      svg {
+        width: 25% !important;
+      }
 
-  @media (max-width: 1024px) {
-    svg {
-      width: 20%;
+      span {
+        margin-right: 5% !important;
+        font-size: 10px;
+      }
+
     }
 
-    span {
-      margin-right: 3%;
-    }
+    @media (max-width: 1024px) {
+      svg {
+        width: 20%;
+      }
 
-  }
+      span {
+        margin-right: 3%;
+      }
+
+    }
 `;

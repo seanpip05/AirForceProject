@@ -43,7 +43,7 @@ timestamps: false
 // Use mongoose-auto-increment for id
 instrumentSchema.plugin(require('mongoose-sequence')(mongoose), {
 inc_field: 'id',
-start_seq: 1  // Optional: start numbering from 1
+start_seq: 1 // start numbering from 1
 });
 
 const InstrumentData = mongoose.model('InstrumentData', instrumentSchema);

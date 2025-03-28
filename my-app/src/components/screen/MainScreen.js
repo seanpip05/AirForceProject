@@ -32,14 +32,13 @@ const MainScreen = ({
     return ""; // default color
   };
 
-  // Component for the custom heading circle
+  // functino to get the arrows in the right place
   const HeadingIndicator = () => {
-    // Convert HIS value to rotation angle
     const hisValue = parseFloat(instrumentData.his) || 0;
     
     return (
       <HeadingCircle>
-        {/* Zero reference arrow - always points straight up */}
+        {/* black arrow always looks up */}
         <Arrow 
           style={{
             height: '40%', 
@@ -47,7 +46,7 @@ const MainScreen = ({
           }} 
         />
         
-        {/* HIS value arrow - rotates based on HIS value */}
+        {/* orange arrow depends on HIS */}
         <Arrow 
           style={{
             height: '50%', 
@@ -56,7 +55,6 @@ const MainScreen = ({
             backgroundColor: 'orange'
           }} 
         />
-        {/* Circle markings */}
         <div style={{position: 'absolute', top: '5%', left: '50%', transform: 'translateX(-50%)'}}>0</div>
         <div style={{position: 'absolute', bottom: '5%', left: '50%', transform: 'translateX(-50%)'}}>180</div>
         <div style={{position: 'absolute', top: '50%', left: '5%', transform: 'translateY(-50%)'}}>270</div>
@@ -68,7 +66,7 @@ const MainScreen = ({
   const getArrowPosition = () => {
     const altitude = parseFloat(instrumentData.altitude) || 0;
   
-    // Convert altitude to percentage for positioning within the rectangle
+    // convert altitude to percentage
     const altitudePercentage = Math.min(100, (1 - altitude / 3000) * 100);
   
     return (
@@ -78,7 +76,7 @@ const MainScreen = ({
         <div style={{ position: "absolute", top: "60%", left: "50%", transform: "translateX(-50%)" }}>1000</div>
         <div style={{ position: "absolute", top: "90%", left: "50%", transform: "translateX(-50%)" }}>0</div>
   
-        {/* Arrow dynamically positioned based on altitude */}
+        {/* arrow position by the percentage */}
         <RightArrow 
           style={{ 
             position: "absolute", 

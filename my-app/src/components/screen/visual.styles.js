@@ -68,7 +68,6 @@ export const HeadingCircle = styled(Circle)`
   border: 2px solid black;
 `;
 
-// Styled arrow component
 export const Arrow = styled.div`
     position: absolute;
     width: 2px;
@@ -80,7 +79,7 @@ export const Arrow = styled.div`
         height: 30% !important;
         top: 25% !important;
     }
-        
+
     @media (max-width: 480px) {
         height: 15% !important;
         top: 40% !important;
