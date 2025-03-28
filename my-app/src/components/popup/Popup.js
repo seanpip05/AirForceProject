@@ -9,6 +9,7 @@ const Popup = ({ onClose }) => {
     his: '',
     adi: ''
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,15 +19,42 @@ const Popup = ({ onClose }) => {
     }));
   };
 
+  const validateForm = () => {
+    const { altitude, his, adi } = formData;
+
+    if (altitude < 0 || altitude > 3000) {
+      setErrorMessage('Altitude must be between 0 and 3000.');
+      return false;
+    }
+
+    if (his < 0 || his > 360) {
+      setErrorMessage('HIS must be between 0 and 360.');
+      return false;
+    }
+
+    if (adi < -100 || adi > 100) {
+      setErrorMessage('ADI must be between -100 and 100.');
+      return false;
+    }
+
+    setErrorMessage('');
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return; // prevent submission
+    }
+
     try {
       const response = await axios.post('http://localhost:5000/submit', {
         altitude: parseFloat(formData.altitude),
         his: parseFloat(formData.his),
         adi: parseFloat(formData.adi)
       });
-      
+
       alert(response.data.message);
       onClose();
     } catch (error) {
@@ -37,8 +65,9 @@ const Popup = ({ onClose }) => {
 
   return (
     <Overlay onClick={onClose}>
-      <PopupContainer onClick={(e) => e.stopPropagation()}>
+      <PopupContainer onClick={(e) => e.stopPropagation()}> {/* dont let press on popup close it */}
         <h2>Inputs Page</h2>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* display error */}
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <InfoRow>
             <LeftBox>Altitude</LeftBox>
