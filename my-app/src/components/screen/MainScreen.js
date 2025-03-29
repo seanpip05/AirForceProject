@@ -56,9 +56,9 @@ const MainScreen = ({
           }} 
         />
         <div style={{position: 'absolute', top: '5%', left: '50%', transform: 'translateX(-50%)'}}>0</div>
-        <div style={{position: 'absolute', bottom: '5%', left: '50%', transform: 'translateX(-50%)'}}>180</div>
+        <div style={{position: 'absolute', bottom: '5%', left: '50%', transform: 'translateX(-50%)'}}>90</div>
         <div style={{position: 'absolute', top: '50%', left: '5%', transform: 'translateY(-50%)'}}>270</div>
-        <div style={{position: 'absolute', top: '50%', right: '5%', transform: 'translateY(-50%)'}}>90</div>
+        <div style={{position: 'absolute', top: '50%', right: '5%', transform: 'translateY(-50%)'}}>180</div>
       </HeadingCircle>
     );
   };
